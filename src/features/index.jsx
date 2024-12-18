@@ -1,3 +1,4 @@
-import { HomeConatiner } from "./Home";
+import { LoginPage } from "./Login";
+import { HomePage } from "./Home";
 
-export { HomeConatiner };
+export { LoginPage, HomePage };

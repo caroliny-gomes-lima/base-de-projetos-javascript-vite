@@ -1,3 +1,3 @@
-import HomeConatiner from "./container/HomeConatiner";
+import HomePage from "./container/HomeConatiner";
 
-export { HomeConatiner };
+export { HomePage };

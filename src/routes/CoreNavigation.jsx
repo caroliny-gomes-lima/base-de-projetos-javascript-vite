@@ -1,32 +1,29 @@
 import React from "react";
-import { Provider } from "react-redux";
-import { ConnectedRouter } from "connected-react-router";
+// import { Provider } from "react-redux";
+// import { ConnectedRouter } from "connected-react-router";
 
-import { Box } from "@mui/material";
+import { Box, CssBaseline } from "@mui/material";
+//import { ThemeProvider as StyledThemeProvider } from "styled-components";
+import ApplicationRoutes from "./Routes";
 
+// function ThemeProviderComponent({ theme, children }) {
+//   return (
+//     <ThemeProvider theme={theme}>
+//       <StyledThemeProvider theme={theme}>{children}</StyledThemeProvider>
+//     </ThemeProvider>
+//   );
+// }
 
 function CoreNavigation() {
-    return (
-
-    )
+  return (
+    <Box bgcolor={"aqua"} height={"100%"} overflow={"hidden"}>
+      <CssBaseline />
+      <ApplicationRoutes />
+    </Box>
+  );
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+export default React.memo(CoreNavigation);
 
 /* 
 * AWARE COMPONENT
@@ -41,7 +38,7 @@ function CoreNavigation() {
 
 //------------------------------------------------------------------------------------------------
 
- /* LIBS
+/* LIBS
  * O connected-react-router é uma biblioteca que integra o gerenciamento de rotas do React Router 
    com o estado global do Redux. Isso permite que você sincronize o histórico de navegação da 
    aplicação com o estado do Redux, exemplo:

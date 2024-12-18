@@ -1,12 +1,12 @@
 //import React from "react";
 import Styles from "../styles/Styles";
 
-function HomeConatiner() {
+function LoginConatiner() {
   return (
     <Styles.container>
-      <text>PAGINA INICIAL</text>
+      <text>PAGINA LOGIN</text>
     </Styles.container>
   );
 }
 
-export default HomeConatiner;
+export default LoginConatiner;
