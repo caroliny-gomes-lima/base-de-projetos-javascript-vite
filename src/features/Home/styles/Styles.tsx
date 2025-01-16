@@ -1,10 +1,11 @@
 import styled from "styled-components";
 
-const container = styled.div(() => {
+const container = styled.div(({ theme }) => {
+    const { palette: colors } = theme;
     return {
         width: "100%",
         display: "flex",
-        backgroundColor: "#eeeeee",
+        backgroundColor: colors.secondary.main,
     }
 })
 

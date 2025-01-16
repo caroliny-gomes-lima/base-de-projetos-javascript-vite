@@ -4,7 +4,6 @@ const container = styled.div(() => {
   return {
     width: "100%",
     display: "flex",
-    backgroundColor: "#eeeeee",
   };
 });
 

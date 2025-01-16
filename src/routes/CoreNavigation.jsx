@@ -2,23 +2,26 @@ import React from "react";
 // import { Provider } from "react-redux";
 // import { ConnectedRouter } from "connected-react-router";
 
-import { Box, CssBaseline } from "@mui/material";
-//import { ThemeProvider as StyledThemeProvider } from "styled-components";
+import { Box, CssBaseline, ThemeProvider } from "@mui/material";
+import { ThemeProvider as StyledThemeProvider } from "styled-components";
 import ApplicationRoutes from "./Routes";
+import { Theme } from "../config/index.jsx";
 
-// function ThemeProviderComponent({ theme, children }) {
-//   return (
-//     <ThemeProvider theme={theme}>
-//       <StyledThemeProvider theme={theme}>{children}</StyledThemeProvider>
-//     </ThemeProvider>
-//   );
-// }
+function ThemeProviderComponent({ theme, children }) {
+  return (
+    <ThemeProvider theme={theme}>
+      <StyledThemeProvider theme={theme}>{children}</StyledThemeProvider>
+    </ThemeProvider>
+  );
+}
 
 function CoreNavigation() {
   return (
-    <Box bgcolor={"aqua"} height={"100%"} overflow={"hidden"}>
-      <CssBaseline />
-      <ApplicationRoutes />
+    <Box height={"100%"} overflow={"hidden"}>
+      <ThemeProviderComponent theme={Theme.light}>
+        <CssBaseline />
+        <ApplicationRoutes />
+      </ThemeProviderComponent>
     </Box>
   );
 }
