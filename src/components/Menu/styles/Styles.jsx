@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Button, IconButton } from "@mui/material";
 
 const Container = styled.div(({ theme }) => {
-  const { palette: colors, spacing } = theme;
+  const { palette: colors } = theme;
   return {
     width: "267px",
     height: "100%",
@@ -79,7 +79,7 @@ const NavPageContainer = styled.div(({ theme }) => {
 });
 
 const NavigationButton = styled(Button)(({ theme, $changeColor }) => {
-  const { palette: colors, spacing } = theme;
+  const { palette: colors } = theme;
   return {
     "&&.MuiButton-root": {
       width: "100%",

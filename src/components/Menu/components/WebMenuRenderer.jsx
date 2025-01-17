@@ -1,5 +1,4 @@
 import React from "react";
-import DefaultLogo from "../../others/DefaultLogo";
 import Styles from "../styles/Styles";
 import ItensMenuRenderer from "./ItensMenuRenderer";
 import { useLocation, useNavigate } from "react-router-dom";
