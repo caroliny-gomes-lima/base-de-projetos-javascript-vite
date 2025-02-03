@@ -7,6 +7,7 @@ import { Header, MenuNavigation } from "../components";
 
 function ApplicationRoutes() {
   const [MenuHeigh, setMenuHeigh] = React.useState(null);
+  const [isOpenMenu, setMenuOpen] = React.useState(false);
 
   //HINT: 1
   const calculateMenuHeigh = React.useCallback(() => {
@@ -30,9 +31,9 @@ function ApplicationRoutes() {
     <div style={{ height: "100%", width: "100vw" }}>
       <Styles.Container>
         <Router>
-          <Header id="header-menu" />
+          <Header id="header-menu" onClick={() => setMenuOpen(true)} />
           <Styles.Content>
-            <MenuNavigation />
+            <MenuNavigation isOpenMenu={isOpenMenu} setMenuOpen={setMenuOpen} />
             <Styles.PageContainer $menuHeight={MenuHeigh}>
               <Styles.PageContent>
                 <Routes>

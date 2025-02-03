@@ -8,15 +8,17 @@ function ItensMenuRenderer({ handleNavigation, location }) {
       {pagesConfig.logged.map((item) => {
         return item.pages.map((page, index) => {
           return (
-            <Styles.NavPageContainer key={index}>
+            <div key={index}>
               <Styles.NavigationButton
                 onClick={() => handleNavigation(page.path)}
                 $changeColor={page.path === location.pathname}
               >
-                {page.icon}
-                <p>{page.name}</p>
+                <Styles.PageNavigationButton>
+                  {page.icon}
+                  <p>{page.title}</p>
+                </Styles.PageNavigationButton>
               </Styles.NavigationButton>
-            </Styles.NavPageContainer>
+            </div>
           );
         });
       })}

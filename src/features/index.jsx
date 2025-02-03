@@ -1,4 +1,5 @@
 import { LoginPage } from "./Login";
 import { HomePage } from "./Home";
+import { SettingsPage } from "./Settings";
 
-export { LoginPage, HomePage };
+export { LoginPage, HomePage, SettingsPage };

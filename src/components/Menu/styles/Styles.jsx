@@ -1,10 +1,11 @@
 import styled from "styled-components";
-import { Button, IconButton } from "@mui/material";
+import { Button, Icon, IconButton } from "@mui/material";
+import { FontFamily } from "../../../config";
 
-const Container = styled.div(({ theme }) => {
+const Container = styled.div(({ theme, menuMobile }) => {
   const { palette: colors } = theme;
   return {
-    width: "267px",
+    width: "40vh",
     height: "100%",
     display: "flex",
     flexDirection: "column",
@@ -12,41 +13,41 @@ const Container = styled.div(({ theme }) => {
     backgroundColor: colors.text.alternative,
     position: "relative",
     boxShadow: "0px 0px 4px #00000014",
-    zIndex: 90,
-    padding: theme.spacing(1),
-    borderTop: "solid 2px white",
+    padding: menuMobile ? theme.spacing(2, 2, 2, 2) : theme.spacing(5, 2, 2, 2),
+    borderTop: menuMobile ? "none" : "solid 2px white",
+    flexShrink: 0,
   };
 });
 
 const Content = styled.div(({ theme }) => {
   return {
-    width: "100%",
-    height: "fit-content",
+    width: "auto",
+    height: "auto",
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-start",
     gap: theme.spacing(1),
-    marginBottom: theme.spacing(17),
+    //border: "solid 1px white",
   };
 });
 
 const MenuHeader = styled.div(({ theme }) => {
   return {
     width: "100%",
-    padding: theme.spacing(1, 0, 0, 7),
     display: "flex",
-    flexWrap: "wrap",
     flexDirection: "row",
     justifyContent: "space-between",
-    gap: theme.spacing(1),
-    alignItems: "flex-start",
+    gap: theme.spacing(2),
+    alignItems: "center",
   };
 });
 
 const CloseButtom = styled(IconButton)(({ theme }) => {
+  const { palette: colors } = theme;
   return {
     "&&.MuiIconButton-root": {
-      color: theme.palette.primary.contrastText,
+      color: colors.secondary.main,
+      alignSelf: "flex-start",
       "&:hover": {
         opacity: 0.6,
       },
@@ -58,55 +59,58 @@ const MenuFooter = styled.div(({ theme }) => {
   return {
     width: "100%",
     display: "flex",
-    flexDirection: "column",
+    flexDirection: "row",
+    justifyContent: "space-between",
     padding: theme.spacing(1, 2),
     alignItems: "center",
-    borderRadius: theme.spacing(1),
-    backgroundColor: "black",
+    //backgroundColor: "black",
   };
 });
 
-const NavPageContainer = styled.div(({ theme }) => {
-  const { palette: colors, spacing } = theme;
+//APAGAR ESTILIZAÇÃO DE TEXTO E CRIAR COMPONENTE DE TEXTO GLOBAL (HOC)
+const StyledText = styled.div(({ theme }) => {
+  const { palette: colors } = theme;
   return {
-    paddingRight: spacing(0.5),
-    "&:hover": {
-      transition: "0.5s",
-      backgroundColor: colors.secondary.contrastText,
-      color: colors.action.hover,
-    },
+    ...FontFamily.semibold10,
+    color: colors.text.secondary,
   };
 });
 
 const NavigationButton = styled(Button)(({ theme, $changeColor }) => {
-  const { palette: colors } = theme;
+  const { palette: colors, spacing } = theme;
   return {
     "&&.MuiButton-root": {
       width: "100%",
-      display: "flex ",
-      justifyContent: "flex-start ",
-      alignItems: "center ",
-      padding: "10px ",
+      display: "flex",
+      justifyContent: "flex-start",
+      alignItems: "center",
+      padding: spacing(0, 2),
       backgroundColor: $changeColor
-        ? colors.button.backgroundColor
+        ? colors.secondary.main
         : colors.button.backgroundColor,
-      color: $changeColor
-        ? colors.button.contrastText
-        : colors.button.contrastText,
-      borderRadius: "5px",
+      color: $changeColor ? colors.text.primary : colors.button.contrastText,
+      border: `solid 2px ${colors.secondary.main}`,
+      borderRadius: spacing(1),
       textTransform: "none",
 
-      "&:hover": {
-        backgroundColor: colors.primary.contrastText,
-        color: colors.secondary.contrastText,
-        "& svg": {
-          width: "20px",
-          height: "20px",
-          marginRight: "8px",
-          fill: "currentColor",
-        },
+      "& svg": {
+        width: "25px",
+        height: "25px",
+        fill: "currentColor",
       },
     },
+  };
+});
+
+//AJUSTAR DEPOIS PARA TIRAR ESTILIZAÇÃO DE TEXTO
+const PageNavigationButton = styled.div(({ theme }) => {
+  const { spacing } = theme;
+  return {
+    ...FontFamily.semibold14,
+    display: "flex",
+    flexDirection: "row",
+    gap: spacing(1),
+    alignItems: "center",
   };
 });
 
@@ -129,9 +133,10 @@ const Styles = {
   Container,
   Content,
   CloseButtom,
-  NavPageContainer,
   NavigationButton,
+  PageNavigationButton,
   LoadingOverlay,
+  StyledText,
 };
 
 export default Styles;

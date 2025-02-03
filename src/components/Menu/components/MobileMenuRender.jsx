@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import ItensMenuRenderer from "./ItensMenuRenderer";
 import DefaultLogo from "../../others/DefaultLogo";
 import { Drawer } from "@mui/material";
+import { Close } from "@mui/icons-material";
 
 function MobileMenuRender({ open, onClose }) {
   const navigate = useNavigate();
@@ -18,25 +19,6 @@ function MobileMenuRender({ open, onClose }) {
     [location.pathname, navigate]
   );
 
-  const DrawMenu = () => {
-    console.log("renderizou menu mobile");
-    return (
-      <Styles.Container>
-        <Styles.MenuHeader>
-          <DefaultLogo />
-        </Styles.MenuHeader>
-        <ItensMenuRenderer
-          handleNavigation={handleNavigation}
-          location={location}
-        />
-        MENU LATERAL
-        <Styles.MenuFooter>
-          <text>Footer</text>
-        </Styles.MenuFooter>
-      </Styles.Container>
-    );
-  };
-
   return (
     <Drawer
       variant="temporary"
@@ -44,9 +26,26 @@ function MobileMenuRender({ open, onClose }) {
       open={open}
       onClose={() => onClose(!open)}
     >
-      {DrawMenu()}
+      {open && (
+        <Styles.Container menuMobile>
+          <Styles.MenuHeader>
+            <DefaultLogo />
+            <Styles.CloseButtom>
+              <Close />
+            </Styles.CloseButtom>
+          </Styles.MenuHeader>
+          <ItensMenuRenderer
+            handleNavigation={handleNavigation}
+            location={location}
+          />
+          <Styles.MenuFooter>
+            <Styles.StyledText>Company Web Admin</Styles.StyledText>
+            <Styles.StyledText>Version 0.0.1</Styles.StyledText>
+          </Styles.MenuFooter>
+        </Styles.Container>
+      )}
     </Drawer>
   );
 }
 
-export default MobileMenuRender;
+export default React.memo(MobileMenuRender);

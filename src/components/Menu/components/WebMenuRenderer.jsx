@@ -12,7 +12,6 @@ function WebMenuRenderer() {
     (path) => {
       //HINT 2
       if (location.pathname !== path) {
-        console.log("navegando para", path);
         navigate(path);
       }
     },
@@ -25,9 +24,9 @@ function WebMenuRenderer() {
         handleNavigation={handleNavigation}
         location={location}
       />
-      MENU LATERAL
       <Styles.MenuFooter>
-        <text>Footer</text>
+        <Styles.StyledText>Company Web Admin</Styles.StyledText>
+        <Styles.StyledText>Version 0.0.1</Styles.StyledText>
       </Styles.MenuFooter>
     </Styles.Container>
   );

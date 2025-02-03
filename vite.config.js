@@ -9,6 +9,6 @@ export default defineConfig({
   assetsInclude: ["**/*.ttf", "**/*.woff", "**/*.woff2"],
   server: {
     // Abre diretamente a rota /login no servidor
-    open: paths.login,
+    open: paths.home,
   },
 });

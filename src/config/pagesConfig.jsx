@@ -1,3 +1,4 @@
+import { Home } from "@mui/icons-material";
 import { paths } from "../routes/Navigation";
 
 const pagesConfig = {
@@ -17,13 +18,17 @@ const pagesConfig = {
       pages: [
         {
           navigationId: 0,
-          path: paths.login,
-          name: "loginPage",
+          title: "Home",
+          path: paths.home,
+          name: "homePage",
+          icon: <Home />,
         },
         {
           navigationId: 1,
-          path: paths.home,
-          name: "homePage",
+          title: "Configurações",
+          path: paths.settings,
+          name: "settingsPage",
+          icon: <Home />,
         },
       ],
     },

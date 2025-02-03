@@ -1,14 +1,17 @@
 import styled from "styled-components";
 import { FontFamily } from "../../../config";
+import { Paper } from "@mui/material";
 
-const Container = styled.div(({ theme }) => {
+const Container = styled(Paper)(({ theme }) => {
   const { palette: colors } = theme;
   return {
     width: "100%",
     height: "100%",
-    //position: "relative",
+    position: "relative",
     backgroundColor: colors.secondary.main,
-    //border: "solid 2px blue",
+    "&&.MuiPaper-elevation": {
+      boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)",
+    },
   };
 });
 
@@ -29,9 +32,8 @@ const Content = styled.div(({ theme }) => {
 const LogoGroup = styled.div(({ theme }) => {
   const { spacing, palette: colors } = theme;
   return {
-    minWidth: "202px", // Pode ser ajustado com base no layout
-    maxWidth: "230px", // Pode ser ajustado com base no layout
-    width: "230px", // Pode ser ajustado com base no layout0%",
+    width: "40vh",
+    height: "100%",
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
@@ -39,7 +41,6 @@ const LogoGroup = styled.div(({ theme }) => {
     alignItems: "center",
     padding: spacing(0, 2, 0, 2),
     backgroundColor: colors.text.alternative,
-    flexGrow: 0, // Impede o crescimento além do tamanho definido
     flexShrink: 0, // Impede que ele encolha
     //border: "solid 2px blue",
   };
