@@ -1,4 +1,4 @@
-# Base de projeto Vite
+# Base de projetos em Vite
 
 <div align="center"><strong>Em desenvolvimento</strong></div><br/>
 <div align="center">
