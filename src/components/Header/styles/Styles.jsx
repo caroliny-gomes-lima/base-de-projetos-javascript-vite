@@ -21,10 +21,9 @@ const Content = styled.div(({ theme }) => {
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-    gap: theme.spacing(10),
     alignItems: "center",
     padding: spacing(0, 2, 0, 0),
-    width: "100%",
+    //width: "100%",
     height: "fit-content",
   };
 });

@@ -6,7 +6,9 @@ import IconButtonComponent from "../../buttons/IconButton";
 import { Menu } from "@mui/icons-material";
 import DefaultLogo from "../../others/DefaultLogo";
 import InputComponent from "../../inputs/Input";
-import UserInfo from "./UserInfo";
+import UserInfo from "../components/UserInfo";
+import { IoSearch } from "react-icons/io5";
+import InputSearch from "../components/InputSearch";
 //import whyDidYouRender from "@welldone-software/why-did-you-render";
 function Header({ onClick }) {
   //console.log("Header renderizou!");
@@ -25,7 +27,7 @@ function Header({ onClick }) {
           )}
           <DefaultLogo />
         </Styles.LogoGroup>
-        {/* <InputComponent /> */}
+        <InputSearch />
         <Styles.UserArea>
           <UserInfo />
         </Styles.UserArea>

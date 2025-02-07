@@ -1,7 +1,7 @@
 import React from "react";
 import Styles from "../styles/Styles";
 import Avatar from "@mui/material/Avatar";
-import TextComponent from "../../others/Texts";
+import TextComponent from "../../others/TextComponent";
 import { Fonts } from "../../../config";
 import WithGlobalLoader from "../../others/TextLoader";
 

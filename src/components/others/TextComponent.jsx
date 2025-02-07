@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { Fonts } from "../../config";
 
@@ -7,8 +6,8 @@ const StyledText = styled.span(({ theme, $fontFamily, $fontSize, $color }) => {
   return {
     padding: 0,
     margin: 0,
-    fontFamily: $fontFamily || Fonts.medium, // Uso do fallback adequado
-    fontSize: $fontSize || 12, // Garantir unidade correta
+    fontFamily: $fontFamily || Fonts.medium,
+    fontSize: $fontSize || 12,
     color: $color || colors.text.primary,
   };
 });

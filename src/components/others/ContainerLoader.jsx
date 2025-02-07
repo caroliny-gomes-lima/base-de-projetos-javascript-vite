@@ -2,8 +2,8 @@ import React from "react";
 import { CircularProgress } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
-const LoadContainer = (WrappedComponent) => {
-  const HOC = ({ isLoading, ...props }) => {
+function LoadContainer(WrappedComponent) {
+  return function HOC({ isLoading, ...props }) {
     return (
       <>
         {isLoading ? (
@@ -25,12 +25,6 @@ const LoadContainer = (WrappedComponent) => {
       </>
     );
   };
-
-  HOC.displayName = `LoadContainer(${
-    WrappedComponent.displayName || WrappedComponent.name || "Component"
-  })`;
-
-  return HOC;
-};
+}
 
 export default LoadContainer;

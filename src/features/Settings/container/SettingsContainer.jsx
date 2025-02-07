@@ -5,6 +5,7 @@ import { Fonts } from "../../../config";
 
 const Text = TextGlobalLoader(TextComponent);
 
+//O escopo abaixo é o render do componente
 function SettingsConatiner() {
   return (
     <Styles.container>

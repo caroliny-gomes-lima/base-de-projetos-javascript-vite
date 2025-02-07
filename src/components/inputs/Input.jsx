@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import { Input } from "@mui/material";
 import { FontFamily } from "../../config";
-import { Controller, useForm, useFormContext } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
+import IconEndAdornmentComponent from "./inputComponents/IconEnd.adornment";
 
 const StyledInput = styled(Input)(({ theme }) => {
   const { palette: colors, spacing } = theme;
@@ -13,7 +14,7 @@ const StyledInput = styled(Input)(({ theme }) => {
       color: colors.text.primary,
       backgroundColor: colors.primary.main,
       padding: theme.spacing(1.962, 2.5),
-      borderRadius: spacing(1),
+      borderRadius: spacing(0.5),
       "&:before, &:after": {
         borderBottom: "none !important",
       },
@@ -27,8 +28,27 @@ const StyledInput = styled(Input)(({ theme }) => {
   };
 });
 
-function InputComponent({ label, name }) {
-  const { control } = useFormContext();
+const Label = styled.label(({ withError, theme }) => {
+  const { palette: colors } = theme;
+  return {
+    ...FontFamily.bold12,
+    padding: 0,
+    margin: 0,
+    color: withError ? colors.error.main : colors.primary.contrastText,
+    transition: ".2s",
+  };
+});
+
+function InputComponent({
+  label,
+  name,
+  type,
+  defaultValue,
+  toolTip,
+  onSubmit,
+  icon,
+}) {
+  const { control, handleSubmit } = useFormContext();
   console.log("InputComponent renderizou!");
   return (
     <>
@@ -36,11 +56,33 @@ function InputComponent({ label, name }) {
         name={name}
         control={control}
         rules={{ required: false }}
+        defaultValue={defaultValue || ""}
         render={({ field }) => (
-          <div>
-            {label && <label>{label}</label>}
-            <StyledInput {...field} />
-          </div>
+          <>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              {label && <Label>{label}</Label>}
+              {toolTip || null}
+            </div>
+            <StyledInput
+              {...field}
+              type={type === "file" ? null : type === "search" ? "text" : type}
+              value={field.value ?? ""}
+              endAdornment={
+                icon && icon.Component ? (
+                  <IconEndAdornmentComponent
+                    formHandler={handleSubmit(onSubmit)}
+                    icon={icon}
+                  />
+                ) : null
+              }
+            />
+          </>
         )}
       />
     </>
