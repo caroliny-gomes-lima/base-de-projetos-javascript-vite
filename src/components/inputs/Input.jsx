@@ -1,5 +1,6 @@
+import React from "react";
 import styled from "styled-components";
-import { Input } from "@mui/material";
+import { Input, InputAdornment } from "@mui/material";
 import { FontFamily } from "../../config";
 import { Controller, useFormContext } from "react-hook-form";
 import IconEndAdornmentComponent from "./inputComponents/IconEnd.adornment";
@@ -13,7 +14,7 @@ const StyledInput = styled(Input)(({ theme }) => {
       height: "40px",
       color: colors.text.primary,
       backgroundColor: colors.primary.main,
-      padding: theme.spacing(1.962, 2.5),
+      padding: theme.spacing(1.962, 1, 1.962, 1.962),
       borderRadius: spacing(0.5),
       "&:before, &:after": {
         borderBottom: "none !important",
@@ -29,11 +30,12 @@ const StyledInput = styled(Input)(({ theme }) => {
 });
 
 const Label = styled.label(({ withError, theme }) => {
-  const { palette: colors } = theme;
+  const { palette: colors, spacing } = theme;
   return {
     ...FontFamily.bold12,
     padding: 0,
-    margin: 0,
+    marginTop: spacing(1),
+    marginBottom: spacing(1),
     color: withError ? colors.error.main : colors.primary.contrastText,
     transition: ".2s",
   };
@@ -79,7 +81,9 @@ function InputComponent({
                     formHandler={handleSubmit(onSubmit)}
                     icon={icon}
                   />
-                ) : null
+                ) : (
+                  <InputAdornment position="end">{icon}</InputAdornment>
+                )
               }
             />
           </>
@@ -88,4 +92,4 @@ function InputComponent({
     </>
   );
 }
-export default InputComponent;
+export default React.memo(InputComponent);

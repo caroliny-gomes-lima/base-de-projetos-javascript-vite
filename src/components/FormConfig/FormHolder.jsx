@@ -6,7 +6,10 @@ function WithFormHolder(WrappedComponent, formOptions = {}) {
     const methods = useForm(formOptions);
     return (
       <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(onSubmit)}>
+        <form
+          onSubmit={methods.handleSubmit(onSubmit)}
+          style={{ width: "100%" }}
+        >
           <WrappedComponent {...props} {...methods} />
         </form>
       </FormProvider>

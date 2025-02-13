@@ -10,9 +10,9 @@ const Text = TextGlobalLoader(TextComponent);
 function HomeConatiner() {
   //const texts = Texts["ptBr"].home;
 
-  const handleFormSubmit = React.useCallback((data) => {
-    console.log("#######", data);
-  }, []);
+  // const handleFormSubmit = React.useCallback((data) => {
+  //   console.log("#######", data);
+  // }, []);
 
   return (
     <Styles.Container>
@@ -25,7 +25,7 @@ function HomeConatiner() {
         Componentes Inputs
       </Text>
       <Styles.content>
-        <InputsTypes onSubmit={handleFormSubmit} />
+        <InputsTypes onSubmit={(data) => alert(JSON.stringify(data))} />
       </Styles.content>
     </Styles.Container>
   );

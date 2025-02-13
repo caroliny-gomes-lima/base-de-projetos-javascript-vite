@@ -5,8 +5,8 @@ import { Paper } from "@mui/material";
 const Container = styled(Paper)(({ theme }) => {
   const { palette: colors } = theme;
   return {
-    width: "100%",
-    height: "100%",
+    width: "auto",
+    height: "auto",
     position: "relative",
     backgroundColor: colors.secondary.main,
     "&&.MuiPaper-elevation": {
@@ -23,7 +23,7 @@ const Content = styled.div(({ theme }) => {
     justifyContent: "space-between",
     alignItems: "center",
     padding: spacing(0, 2, 0, 0),
-    //width: "100%",
+    width: "100%",
     height: "fit-content",
   };
 });

@@ -7,7 +7,7 @@ function IconEndAdornmentComponent({ formHandler, icon }) {
         {...(icon.buttonProps ? icon.buttonProps : {})} // HINT 1
         onClick={icon.submit ? formHandler : icon.buttonProps?.onClick} //HINT 2
       >
-        <icon.Component />
+        <icon.Component style={{ color: icon.color }} />
       </IconButton>
     </InputAdornment>
   );
