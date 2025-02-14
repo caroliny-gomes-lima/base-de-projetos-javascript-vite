@@ -47,7 +47,7 @@ function createThemeConfig({
         disabled: textDisabledColor,
       },
       error: {
-        main: backgroundAlternativeColor,
+        main: textErrorColor,
         contrastText: textErrorColor,
       },
       button: {

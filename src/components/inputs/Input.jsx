@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import { Input, InputAdornment } from "@mui/material";
+import { FormHelperText, Input, InputAdornment } from "@mui/material";
 import { FontFamily } from "../../config";
 import { Controller, useFormContext } from "react-hook-form";
 import IconEndAdornmentComponent from "./inputComponents/IconEnd.adornment";
+import FileEndAdornmentComponent from "./inputComponents/FileEnd.adornment";
 
 const StyledInput = styled(Input)(({ theme }) => {
   const { palette: colors, spacing } = theme;
@@ -46,9 +47,17 @@ function InputComponent({
   name,
   type,
   defaultValue,
+  error,
+  required,
+  validation,
   toolTip,
   onSubmit,
   icon,
+  downloadButtonLabel,
+  uploadButtonLabel,
+  downloadHref,
+  openOnNewTab,
+  hideButtonLabel,
 }) {
   const { control, handleSubmit } = useFormContext();
   console.log("InputComponent renderizou!");
@@ -57,7 +66,7 @@ function InputComponent({
       <Controller
         name={name}
         control={control}
-        rules={{ required: false }}
+        rules={{ required: Boolean(required), validate: validation }}
         defaultValue={defaultValue || ""}
         render={({ field }) => (
           <>
@@ -73,10 +82,27 @@ function InputComponent({
             </div>
             <StyledInput
               {...field}
-              type={type === "file" ? null : type === "search" ? "text" : type}
-              value={field.value ?? ""}
+              type={type === "file" ? "text" : type}
+              value={type === "file" ? undefined : field.value}
+              accept={type === "file" ? "application/pdf" : null}
+              onChange={(e) => {
+                if (type === "file") {
+                  field.onChange(e.target.files); // Atualiza corretamente o estado
+                } else {
+                  field.onChange(e.target.value);
+                }
+              }}
               endAdornment={
-                icon && icon.Component ? (
+                type === "file" ? (
+                  <FileEndAdornmentComponent
+                    downloadButtonLabel={downloadButtonLabel}
+                    uploadButtonLabel={uploadButtonLabel}
+                    downloadHref={downloadHref}
+                    openOnNewTab={openOnNewTab}
+                    hideButtonLabel={hideButtonLabel}
+                    onFileChange={(e) => field.onChange(e.target.files)}
+                  />
+                ) : icon && icon.Component ? (
                   <IconEndAdornmentComponent
                     formHandler={handleSubmit(onSubmit)}
                     icon={icon}
@@ -86,6 +112,7 @@ function InputComponent({
                 )
               }
             />
+            {error && <FormHelperText error>{error.message}</FormHelperText>}
           </>
         )}
       />

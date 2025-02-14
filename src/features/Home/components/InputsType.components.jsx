@@ -9,7 +9,7 @@ import {
   TooltipComponent,
   WithFormHolder,
 } from "../../../components";
-import { IoSearch } from "react-icons/io5";
+
 function InputsRender() {
   const texts = Texts["ptBr"].home;
 
@@ -30,11 +30,27 @@ function InputsRender() {
         </Grid>
 
         <Grid size={{ xs: 2, sm: 4, md: 4, lg: 4 }}>
-          <InputComponent name="number" label="Number" defaultValue="0" />
+          <InputComponent
+            name="number"
+            label="Number"
+            type="number"
+            defaultValue="0"
+          />
         </Grid>
 
         <Grid size={{ xs: 2, sm: 4, md: 4, lg: 4 }}>
           <InputPassword />
+        </Grid>
+
+        <Grid size={{ xs: 2, sm: 4, md: 4, lg: 4 }}>
+          <InputComponent
+            name="file"
+            label="Arquivos"
+            type="file"
+            uploadButtonLabel="Enviar Arquivo"
+            downloadHref="https://exemplo.com/arquivo.pdf"
+            openOnNewTab={true}
+          />
         </Grid>
       </Grid>
 

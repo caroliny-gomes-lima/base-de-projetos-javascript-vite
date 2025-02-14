@@ -2,8 +2,13 @@ import React from "react";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import InputComponent from "./Input";
 import { colors } from "@mui/material";
+import validations from "../FormConfig/Validations";
+import { useFormContext } from "react-hook-form";
 
 function InputPassword() {
+  const {
+    formState: { errors },
+  } = useFormContext();
   const [showPassword, setShowPassword] = React.useState(false);
 
   const handleClickShowPassword = React.useCallback(() => {
@@ -22,13 +27,12 @@ function InputPassword() {
           submit: true,
         }}
         onSubmit={handleClickShowPassword}
+        required={true}
+        error={errors.password}
+        validation={validations.validPassword}
       />
     </>
   );
 }
-//HINT 1
 
 export default InputPassword;
-
-/* 1 - Com mode: "onBlur", a validação de um campo ocorre quando o usuário 
-sai do campo (perde o foco), ou seja, no evento onBlur.*/
