@@ -9,10 +9,22 @@ const Text = TextGlobalLoader(TextComponent);
 //O escopo abaixo é o render do componente
 function HomeConatiner() {
   //const texts = Texts["ptBr"].home;
+  const [fileUrl, setFileUrl] = React.useState("");
+  const [selectedFile, setSelectedFile] = React.useState({
+    url: null,
+    type: null,
+    name: "Sem arquivo selecionado",
+  });
 
   // const handleFormSubmit = React.useCallback((data) => {
   //   console.log("#######", data);
   // }, []);
+
+  const Submit = (data) => {
+    console.log(data);
+    data.file = selectedFile.url;
+    alert(JSON.stringify(data));
+  };
 
   return (
     <Styles.Container>
@@ -25,7 +37,13 @@ function HomeConatiner() {
         Componentes Inputs
       </Text>
       <Styles.content>
-        <InputsTypes onSubmit={(data) => alert(JSON.stringify(data))} />
+        <InputsTypes
+          fileURL={fileUrl}
+          setFileUrl={setFileUrl}
+          selectedFile={selectedFile}
+          setSelectedFile={setSelectedFile}
+          onSubmit={(data) => Submit(data)}
+        />
       </Styles.content>
     </Styles.Container>
   );

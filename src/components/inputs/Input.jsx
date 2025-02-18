@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import { FormHelperText, Input, InputAdornment } from "@mui/material";
+import { FormHelperText, Input } from "@mui/material";
 import { FontFamily } from "../../config";
 import { Controller, useFormContext } from "react-hook-form";
 import IconEndAdornmentComponent from "./inputComponents/IconEnd.adornment";
-import FileEndAdornmentComponent from "./inputComponents/FileEnd.adornment";
+import { forwardRef } from "react";
 
 const StyledInput = styled(Input)(({ theme }) => {
   const { palette: colors, spacing } = theme;
@@ -15,7 +15,7 @@ const StyledInput = styled(Input)(({ theme }) => {
       height: "40px",
       color: colors.text.primary,
       backgroundColor: colors.primary.main,
-      padding: theme.spacing(1.962, 1, 1.962, 1.962),
+      padding: spacing(1.962, 1, 1.962, 1.962),
       borderRadius: spacing(0.5),
       "&:before, &:after": {
         borderBottom: "none !important",
@@ -25,6 +25,10 @@ const StyledInput = styled(Input)(({ theme }) => {
       },
       "& .MuiInputBase-input": {
         padding: 0,
+      },
+      "& .MuiInputBase-input::placeholder": {
+        color: colors.text.primary,
+        opacity: 0.5,
       },
     },
   };
@@ -42,81 +46,67 @@ const Label = styled.label(({ withError, theme }) => {
   };
 });
 
-function InputComponent({
-  label,
-  name,
-  type,
-  defaultValue,
-  error,
-  required,
-  validation,
-  toolTip,
-  onSubmit,
-  icon,
-  downloadButtonLabel,
-  uploadButtonLabel,
-  downloadHref,
-  openOnNewTab,
-  hideButtonLabel,
-}) {
-  const { control, handleSubmit } = useFormContext();
-  console.log("InputComponent renderizou!");
-  return (
-    <>
-      <Controller
-        name={name}
-        control={control}
-        rules={{ required: Boolean(required), validate: validation }}
-        defaultValue={defaultValue || ""}
-        render={({ field }) => (
-          <>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              {label && <Label>{label}</Label>}
-              {toolTip || null}
-            </div>
-            <StyledInput
-              {...field}
-              type={type === "file" ? "text" : type}
-              value={type === "file" ? undefined : field.value}
-              accept={type === "file" ? "application/pdf" : null}
-              onChange={(e) => {
-                if (type === "file") {
-                  field.onChange(e.target.files); // Atualiza corretamente o estado
-                } else {
-                  field.onChange(e.target.value);
+const InputComponent = forwardRef(
+  (
+    {
+      label,
+      name,
+      type,
+      defaultValue,
+      placeholder,
+      error,
+      required,
+      validation,
+      toolTip,
+      onSubmit,
+      icon,
+    },
+    ref
+  ) => {
+    const { control, handleSubmit } = useFormContext();
+
+    return (
+      <>
+        <Controller
+          name={name}
+          control={control}
+          rules={{ required: Boolean(required), validate: validation }}
+          defaultValue={defaultValue || ""}
+          render={({ field }) => (
+            <>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                {label && <Label>{label}</Label>}
+                {toolTip || null}
+              </div>
+              <StyledInput
+                {...field}
+                inputRef={ref || null}
+                type={type === "file" ? "file" : type}
+                value={field.value !== undefined ? field.value : ""}
+                onChange={field.onChange}
+                placeholder={placeholder}
+                endAdornment={
+                  icon && icon.Component ? (
+                    <IconEndAdornmentComponent
+                      formHandler={handleSubmit(onSubmit)}
+                      icon={icon}
+                    />
+                  ) : null
                 }
-              }}
-              endAdornment={
-                type === "file" ? (
-                  <FileEndAdornmentComponent
-                    downloadButtonLabel={downloadButtonLabel}
-                    uploadButtonLabel={uploadButtonLabel}
-                    downloadHref={downloadHref}
-                    openOnNewTab={openOnNewTab}
-                    hideButtonLabel={hideButtonLabel}
-                    onFileChange={(e) => field.onChange(e.target.files)}
-                  />
-                ) : icon && icon.Component ? (
-                  <IconEndAdornmentComponent
-                    formHandler={handleSubmit(onSubmit)}
-                    icon={icon}
-                  />
-                ) : (
-                  <InputAdornment position="end">{icon}</InputAdornment>
-                )
-              }
-            />
-            {error && <FormHelperText error>{error.message}</FormHelperText>}
-          </>
-        )}
-      />
-    </>
-  );
-}
+              />
+              {error && <FormHelperText error>{error.message}</FormHelperText>}
+            </>
+          )}
+        />
+      </>
+    );
+  }
+);
+InputComponent.displayName = "InputComponent";
 export default React.memo(InputComponent);

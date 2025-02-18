@@ -24,10 +24,11 @@ function InputPassword() {
         icon={{
           Component: showPassword ? MdVisibilityOff : MdVisibility,
           color: colors.blue,
-          submit: true,
+          submit: false,
+          buttonProps: {
+            onClick: handleClickShowPassword,
+          },
         }}
-        onSubmit={handleClickShowPassword}
-        required={true}
         error={errors.password}
         validation={validations.validPassword}
       />

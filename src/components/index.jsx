@@ -9,6 +9,7 @@ import TooltipComponent from "./others/Tooltip";
 import InputComponent from "./inputs/Input";
 import InputPassword from "./inputs/InputPassword";
 import InputSearch from "./inputs/InputSearch";
+import InputFile from "./inputs/InputFile";
 
 //HOCs
 import TextGlobalLoader from "./others/TextLoader";
@@ -27,6 +28,7 @@ export {
   InputComponent,
   InputPassword,
   InputSearch,
+  InputFile,
 
   //HOCs
   TextGlobalLoader,

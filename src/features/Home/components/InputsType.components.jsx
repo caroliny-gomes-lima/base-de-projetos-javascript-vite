@@ -5,12 +5,13 @@ import { MdInfo } from "react-icons/md";
 import Grid from "@mui/material/Grid2";
 import {
   InputComponent,
+  InputFile,
   InputPassword,
   TooltipComponent,
   WithFormHolder,
 } from "../../../components";
 
-function InputsRender() {
+function InputsRender({ ...fileProps }) {
   const texts = Texts["ptBr"].home;
 
   return (
@@ -20,7 +21,7 @@ function InputsRender() {
           <InputComponent
             name="name"
             label="Name"
-            defaultValue="Teste"
+            placeholder={"digite"}
             toolTip={
               <TooltipComponent text={texts.tooTip}>
                 <MdInfo size={20} color={colors.blue} />
@@ -43,13 +44,12 @@ function InputsRender() {
         </Grid>
 
         <Grid size={{ xs: 2, sm: 4, md: 4, lg: 4 }}>
-          <InputComponent
-            name="file"
-            label="Arquivos"
-            type="file"
-            uploadButtonLabel="Enviar Arquivo"
-            downloadHref="https://exemplo.com/arquivo.pdf"
-            openOnNewTab={true}
+          <InputFile
+            uploadButton
+            fileURL={fileProps.fileURL}
+            setFileUrl={fileProps.setFileUrl}
+            setSelectedFile={fileProps.setSelectedFile}
+            selectedFile={fileProps.selectedFile}
           />
         </Grid>
       </Grid>
