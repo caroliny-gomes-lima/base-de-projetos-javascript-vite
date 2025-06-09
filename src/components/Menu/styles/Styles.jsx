@@ -90,7 +90,7 @@ const NavigationButton = styled(Button)(({ theme, $changeColor }) => {
         : colors.button.backgroundColor,
       color: $changeColor ? colors.text.primary : colors.button.contrastText,
       border: `solid 2px ${colors.secondary.main}`,
-      borderRadius: spacing(1),
+      borderRadius: spacing(5),
       textTransform: "none",
 
       "& svg": {

@@ -1,112 +1,99 @@
-import React from "react";
-import styled from "styled-components";
-import { FormHelperText, Input } from "@mui/material";
-import { FontFamily } from "../../config";
+import React, { forwardRef } from "react";
+import Styles from "./styles/input.styles"; //INITIALIZAÇÃO
+import { FormHelperText } from "@mui/material";
 import { Controller, useFormContext } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
+import { useInputValue } from "../FormConfig/useFormInput";
 import IconEndAdornmentComponent from "./inputComponents/IconEnd.adornment";
-import { forwardRef } from "react";
+import { Texts } from "../../config";
 
-const StyledInput = styled(Input)(({ theme }) => {
-  const { palette: colors, spacing } = theme;
-  return {
-    "&&.MuiInput-root": {
-      ...FontFamily.medium12,
-      width: "100%",
-      height: "40px",
-      color: colors.text.primary,
-      backgroundColor: colors.primary.main,
-      padding: spacing(1.962, 1, 1.962, 1.962),
-      borderRadius: spacing(0.5),
-      "&:before, &:after": {
-        borderBottom: "none !important",
-      },
-      "&:hover:not(.Mui-disabled):before": {
-        borderBottom: "none",
-      },
-      "& .MuiInputBase-input": {
-        padding: 0,
-      },
-      "& .MuiInputBase-input::placeholder": {
-        color: colors.text.primary,
-        opacity: 0.5,
-      },
-    },
-  };
+const InputComponent = forwardRef((prop, ref) => {
+  const {
+    label,
+    name,
+    type,
+    defaultValue,
+    placeholder,
+    required,
+    validation,
+    toolTip,
+    onSubmit,
+    icon,
+    disabledUntil,
+  } = prop;
+
+  const {
+    control,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useFormContext();
+
+  const watchAllFields = watch(name);
+  const conditionFieldValue = disabledUntil ? watch(disabledUntil) : true;
+  const isDisabled = disabledUntil ? !conditionFieldValue : false;
+
+  const { defaultValue: inputDefaultValue } = useInputValue(
+    watchAllFields,
+    defaultValue
+  );
+
+  return (
+    <>
+      <Controller
+        name={name}
+        control={control}
+        rules={{
+          required: required && Texts.ptBr.requiredField,
+          validate: validation,
+        }}
+        defaultValue={inputDefaultValue || ""}
+        disabled={isDisabled}
+        render={({ field }) => (
+          <>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              {label && (
+                <Styles.Label $withError={errors[name]}>
+                  {label + (required ? "*" : "")}
+                </Styles.Label>
+              )}
+              {toolTip || null}
+            </div>
+            <Styles.StyledInput
+              {...field}
+              name={name}
+              inputRef={ref || null}
+              type={type}
+              value={field.value !== undefined ? field.value : ""}
+              onChange={field.onChange}
+              placeholder={placeholder}
+              endAdornment={
+                icon && icon.Component ? (
+                  <IconEndAdornmentComponent
+                    formHandler={handleSubmit(onSubmit)}
+                    icon={icon}
+                  />
+                ) : null
+              }
+            />
+            <ErrorMessage
+              errors={errors}
+              name={name}
+              render={({ message }) => (
+                <FormHelperText error>{message}</FormHelperText>
+              )}
+            />
+          </>
+        )}
+      />
+    </>
+  );
 });
-
-const Label = styled.label(({ withError, theme }) => {
-  const { palette: colors, spacing } = theme;
-  return {
-    ...FontFamily.bold12,
-    padding: 0,
-    marginTop: spacing(1),
-    marginBottom: spacing(1),
-    color: withError ? colors.error.main : colors.primary.contrastText,
-    transition: ".2s",
-  };
-});
-
-const InputComponent = forwardRef(
-  (
-    {
-      label,
-      name,
-      type,
-      defaultValue,
-      placeholder,
-      error,
-      required,
-      validation,
-      toolTip,
-      onSubmit,
-      icon,
-    },
-    ref
-  ) => {
-    const { control, handleSubmit } = useFormContext();
-
-    return (
-      <>
-        <Controller
-          name={name}
-          control={control}
-          rules={{ required: Boolean(required), validate: validation }}
-          defaultValue={defaultValue || ""}
-          render={({ field }) => (
-            <>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
-                {label && <Label>{label}</Label>}
-                {toolTip || null}
-              </div>
-              <StyledInput
-                {...field}
-                inputRef={ref || null}
-                type={type === "file" ? "file" : type}
-                value={field.value !== undefined ? field.value : ""}
-                onChange={field.onChange}
-                placeholder={placeholder}
-                endAdornment={
-                  icon && icon.Component ? (
-                    <IconEndAdornmentComponent
-                      formHandler={handleSubmit(onSubmit)}
-                      icon={icon}
-                    />
-                  ) : null
-                }
-              />
-              {error && <FormHelperText error>{error.message}</FormHelperText>}
-            </>
-          )}
-        />
-      </>
-    );
-  }
-);
 InputComponent.displayName = "InputComponent";
 export default React.memo(InputComponent);

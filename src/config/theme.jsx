@@ -68,10 +68,10 @@ const Light = createThemeConfig({
   textSecondaryColor: colors.white,
   textAlternativeColor: colors.blue,
   buttonTextColor: colors.white,
-  textDisabledColor: colors.gray,
+  textDisabledColor: colors.lightGray,
   textErrorColor: colors.red,
   buttonBackgroundColor: colors.blue,
-  buttonBackgroundDisabledColor: colors.gray,
+  buttonBackgroundDisabledColor: colors.lightGray,
 });
 const Themes = {
   light: responsiveFontSizes(Light),

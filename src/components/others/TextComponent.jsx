@@ -9,6 +9,10 @@ const StyledText = styled.span(({ theme, $fontFamily, $fontSize, $color }) => {
     fontFamily: $fontFamily || Fonts.medium,
     fontSize: $fontSize || 12,
     color: $color || colors.text.primary,
+    textOverflow: "ellipsis",
+    maxWidth: "250px",
+    whiteSpace: "nowrap",
+    overflow: "hidden",
   };
 });
 
@@ -23,3 +27,7 @@ function TextComponent({ children, fontFamily, fontSize, color }) {
 }
 
 export default TextComponent;
+
+/*OBERVAÇÕES: Mudar nome do componente para TextStyled.component e não
+TextComponent porque a interpretação fica errada dando a entender que
+texto é um componente*/

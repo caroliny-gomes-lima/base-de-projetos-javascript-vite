@@ -1,18 +1,48 @@
 import React from "react";
 import { Texts, colors } from "../../../config";
-import { Button } from "@mui/material";
 import { MdInfo } from "react-icons/md";
 import Grid from "@mui/material/Grid2";
 import {
+  ButtonComponent,
   InputComponent,
   InputFile,
   InputPassword,
+  SelectComponent,
   TooltipComponent,
   WithFormHolder,
 } from "../../../components";
-
-function InputsRender({ ...fileProps }) {
+function InputsRender({ loading }) {
   const texts = Texts["ptBr"].home;
+
+  const InputsNames = ["name", "number", "password"];
+
+  const ageList = [
+    { value: 1, label: "Oliver Hansen" },
+    { value: 2, label: "Van Henry" },
+    { value: 3, label: "April Tucker" },
+    { value: 4, label: "Ralph Hubbard" },
+    { value: 5, label: "Omar Alexander" },
+  ];
+
+  const ageTesteList = {
+    teste1: [
+      { value: 1, label: "Oliver Hansen" },
+      { value: 2, label: "Van Henry" },
+      { value: 3, label: "April Tucker" },
+    ],
+    teste2: [
+      { value: 4, label: "Ralph Hubbard" },
+      { value: 5, label: "Omar Alexander" },
+    ],
+  };
+
+  //HINT 2
+  const optionsGrouped = Object.entries(ageTesteList).map(
+    ([group, options]) => ({
+      group,
+      options,
+    })
+  );
 
   return (
     <>
@@ -20,8 +50,9 @@ function InputsRender({ ...fileProps }) {
         <Grid size={{ xs: 2, sm: 4, md: 4, lg: 4 }}>
           <InputComponent
             name="name"
-            label="Name"
-            placeholder={"digite"}
+            label="Nome"
+            placeholder={"digite aqui"}
+            required
             toolTip={
               <TooltipComponent text={texts.tooTip}>
                 <MdInfo size={20} color={colors.blue} />
@@ -33,9 +64,27 @@ function InputsRender({ ...fileProps }) {
         <Grid size={{ xs: 2, sm: 4, md: 4, lg: 4 }}>
           <InputComponent
             name="number"
-            label="Number"
+            label="Numero"
             type="number"
-            defaultValue="0"
+            placeholder={"0"}
+            required
+          />
+        </Grid>
+
+        <Grid size={{ xs: 2, sm: 4, md: 4, lg: 4 }}>
+          <SelectComponent
+            name="selectOne"
+            label="Seleção"
+            withTags
+            options={ageList}
+          />
+        </Grid>
+
+        <Grid size={{ xs: 2, sm: 4, md: 4, lg: 4 }}>
+          <SelectComponent
+            name="selectGrouped"
+            label="Seleção agrupada"
+            optionsGrouped={optionsGrouped}
           />
         </Grid>
 
@@ -44,19 +93,23 @@ function InputsRender({ ...fileProps }) {
         </Grid>
 
         <Grid size={{ xs: 2, sm: 4, md: 4, lg: 4 }}>
-          <InputFile
-            uploadButton
-            fileURL={fileProps.fileURL}
-            setFileUrl={fileProps.setFileUrl}
-            setSelectedFile={fileProps.setSelectedFile}
-            selectedFile={fileProps.selectedFile}
-          />
+          <InputFile label="Enviar arquivo" uploadButton />
+        </Grid>
+
+        <Grid size={{ xs: 2, sm: 4, md: 4, lg: 4 }}>
+          <InputFile label="Baixar arquivo" downloadButton />
         </Grid>
       </Grid>
-
-      <Button style={{ marginTop: "10px", color: "black" }} type="submit">
-        Submit
-      </Button>
+      <Grid container spacing={1}>
+        <Grid size={{ xs: 2, sm: 2, md: 2, lg: 2 }}>
+          <ButtonComponent
+            type="submit"
+            label={Texts["ptBr"].confirm}
+            loading={loading}
+            disabledUntil={InputsNames}
+          ></ButtonComponent>
+        </Grid>
+      </Grid>
     </>
   );
 }
@@ -65,5 +118,13 @@ const InputsTypes = WithFormHolder(InputsRender, { mode: "onBlur" });
 
 export default InputsTypes;
 
-/* 1 - Com mode: "onBlur", a validação de um campo ocorre quando o usuário 
-sai do campo (perde o foco), ou seja, no evento onBlur.*/
+/*
+HINT 1 - Com mode: "onBlur", a validação de um campo ocorre quando o usuário 
+sai do campo (perde o foco), ou seja, no evento onBlur.
+*/
+
+/*
+HINT 2 = tratamento do objeto para que retorne grupos de arrays de opções com
+  o metodo entries 
+  https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
+*/

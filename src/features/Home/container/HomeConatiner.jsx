@@ -6,23 +6,22 @@ import { TextComponent, TextGlobalLoader } from "../../../components";
 
 const Text = TextGlobalLoader(TextComponent);
 
-//O escopo abaixo é o render do componente
+//HINT 1
 function HomeConatiner() {
   //const texts = Texts["ptBr"].home;
-  const [fileUrl, setFileUrl] = React.useState("");
-  const [selectedFile, setSelectedFile] = React.useState({
-    url: null,
-    type: null,
-    name: "Sem arquivo selecionado",
-  });
+  const [loading, setLoading] = React.useState(false);
 
-  // const handleFormSubmit = React.useCallback((data) => {
-  //   console.log("#######", data);
-  // }, []);
+  // const [fileUrl, setFileUrl] = React.useState("");
+  // const [selectedFile, setSelectedFile] = React.useState({
+  //   url: null,
+  //   type: null,
+  //   name: "Sem arquivo selecionado",
+  // });
 
   const Submit = (data) => {
     console.log(data);
-    data.file = selectedFile.url;
+    // data.file = selectedFile.url;
+    setLoading(true);
     alert(JSON.stringify(data));
   };
 
@@ -37,16 +36,14 @@ function HomeConatiner() {
         Componentes Inputs
       </Text>
       <Styles.content>
-        <InputsTypes
-          fileURL={fileUrl}
-          setFileUrl={setFileUrl}
-          selectedFile={selectedFile}
-          setSelectedFile={setSelectedFile}
-          onSubmit={(data) => Submit(data)}
-        />
+        <InputsTypes onSubmit={(data) => Submit(data)} loading={loading} />
       </Styles.content>
     </Styles.Container>
   );
 }
 
 export default HomeConatiner;
+
+/*
+1 - O escopo abaixo é o render do componente
+*/

@@ -3,12 +3,8 @@ import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import InputComponent from "./Input";
 import { colors } from "@mui/material";
 import validations from "../FormConfig/Validations";
-import { useFormContext } from "react-hook-form";
 
 function InputPassword() {
-  const {
-    formState: { errors },
-  } = useFormContext();
   const [showPassword, setShowPassword] = React.useState(false);
 
   const handleClickShowPassword = React.useCallback(() => {
@@ -20,7 +16,10 @@ function InputPassword() {
       <InputComponent
         name="password"
         label="Password"
+        placeholder={"digite aqui"}
         type={showPassword ? "text" : "password"}
+        required
+        validation={validations.validPassword}
         icon={{
           Component: showPassword ? MdVisibilityOff : MdVisibility,
           color: colors.blue,
@@ -29,8 +28,6 @@ function InputPassword() {
             onClick: handleClickShowPassword,
           },
         }}
-        error={errors.password}
-        validation={validations.validPassword}
       />
     </>
   );

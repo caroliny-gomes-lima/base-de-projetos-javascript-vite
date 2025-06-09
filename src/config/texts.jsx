@@ -1,4 +1,8 @@
 const ptBr = {
+  requiredField: "Campo obrigatório",
+  confirm: "Confirmar",
+  cancel: "Cancelar",
+  clear: "Limpar",
   password: {
     errorMessages: {
       passwordSize: "A senha deve ter no mínimo 8 caracteres.",
@@ -7,8 +11,13 @@ const ptBr = {
       decreasingOrder:
         "Senha não pode conter sequências de 4 caracteres ou mais. ex: 4321/dcba",
       passwordRules:
-        "A senha deve conter pelo menos 3 dos seguintes itens: uma letra maiúscula, uma letra minúscula, um número e um caractere especial.",
+        "A senha deve conter pelo menos 3 dos seguintes caracteres: uma letra maiúscula, uma letra minúscula, um número e um caractere especial.",
     },
+  },
+
+  file: {
+    errorMessages:
+      "O arquivo selecionado é muito grande. O tamanho máximo permitido é 5MB.",
   },
 
   Pages: {

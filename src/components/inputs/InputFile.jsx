@@ -1,137 +1,120 @@
+//fazer teste unitário depois
 import React from "react";
-import { IconButton } from "@mui/material";
-import styled from "styled-components";
-import { colors, FontFamily } from "../../config";
+import Styles from "./styles/inputFile.styles"; //INITIALIZAÇÃO
+import { Input } from "@mui/material";
+import { colors, Texts } from "../../config";
 import { Download, Upload } from "@mui/icons-material";
 import TextComponent from "../others/TextComponent";
+import LoadContainer from "../others/ContainerLoader";
+import IconEndAdornmentComponent from "./inputComponents/IconEnd.adornment";
+import { useFileValue } from "../FormConfig/useFormInput";
 
-const InputContainer = styled.div(({ theme }) => {
-  const { palette: colors, spacing } = theme;
-  return {
-    width: "100%",
-    height: "40px",
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    textOverflow: "ellipsis",
-    padding: spacing(1.962, 1, 1.962, 1.962),
-    backgroundColor: colors.primary.main,
-    borderRadius: spacing(0.5),
-  };
-});
-const ContainerLabel = styled.div(() => {
-  return {
-    display: "flex",
-    alignContent: "center",
-    justifyContent: "flex-start",
-  };
-});
+//HOC -> Higher Order Component
+const ImageLoader = LoadContainer(Styles.ImageBox);
 
-const Label = styled.label(({ theme }) => {
-  const { spacing } = theme;
-  return {
-    ...FontFamily.bold12,
-    padding: 0,
-    marginTop: spacing(1),
-    marginBottom: spacing(1),
-    transition: ".2s",
-  };
-});
+//-------------------INICIALIZAÇÃO--------------------------------------
+function InputFile(props) {
+  const {
+    //HINT 1
+    label = "",
+    uploadButton = false,
+    downloadButton = false,
+  } = props;
 
-function InputFile({
-  id = "input-file",
-  uploadButton = false,
-  downloadButton = false,
-  selectedFile = {},
-  fileUrl = "",
-  setSelectedFile = () => {},
-  setFileUrl = () => {},
-}) {
-  const fileInputRef = React.useRef(null);
+  const [fileUrl, setFileUrl] = React.useState({ file: "", fileError: "" }); //HINT 2
+  const [selectedFile, setSelectedFile] = React.useState({
+    url: null,
+    type: null,
+    fileName: "Sem arquivo selecionado",
+  });
+
+  const texts = Texts["ptBr"].file;
   const MAX_FILE_SIZE = 5 * 1024 * 1024;
-  const [fileError, setFileError] = React.useState("");
+  const FILE_TYPE_START_WITH = selectedFile.type?.startsWith("image/");
+  const fileInputRef = React.useRef(null);
 
-  const handleImageChange = (event) => {
-    const file = event.target.files?.[0];
+  //--------------------ATUALIZAÇÃO E DESMONTAGEM----------------
+  //HINT 3
+  const { handleFileChange } = useFileValue({
+    fileUrl,
+    setFileUrl,
+    texts,
+    MAX_FILE_SIZE,
+    setSelectedFile,
+  });
 
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () =>
-        setSelectedFile({
-          url: reader.result,
-          type: file.type,
-          name: file.name,
-          size: file.size,
-        });
-      reader.readAsDataURL(file);
+  //-------------------MONTAGEM-----------------------------
 
-      const url = URL.createObjectURL(file);
-      setFileUrl(url);
-    }
-
-    if (file.size > MAX_FILE_SIZE) {
-      setFileError(
-        "O arquivo selecionado é muito grande. O tamanho máximo permitido é 5MB."
-      );
-      return;
-    }
-  };
-
-  React.useEffect(() => {
-    return () => {
-      if (fileUrl) {
-        URL.revokeObjectURL(fileUrl);
-      }
-    };
-  }, [fileUrl]);
-  console.log(selectedFile.size);
   return (
-    <>
-      <ContainerLabel>
-        <Label>{"Arquivo"}</Label>
-      </ContainerLabel>
-      <InputContainer>
-        <TextComponent>{selectedFile?.name}</TextComponent>
-        <input
-          id={id}
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      {label && (
+        <Styles.ContainerLabel>
+          <Styles.Label>{label}</Styles.Label>
+        </Styles.ContainerLabel>
+      )}
+      <Styles.InputContainer>
+        <TextComponent>{selectedFile?.fileName}</TextComponent>
+        <Input
+          id="input-file"
           name="file"
           type="file"
           accept="image/*, application/pdf"
-          ref={fileInputRef}
-          onChange={handleImageChange}
+          inputRef={fileInputRef}
+          onChange={handleFileChange}
           style={{ display: "none" }}
         />
         {uploadButton && (
-          <IconButton
-            size="small"
-            onClick={() => fileInputRef.current.click()}
-            style={{ backgroundColor: colors.blue }}
-          >
-            <Upload style={{ color: colors.white }} />
-          </IconButton>
+          <IconEndAdornmentComponent
+            icon={{
+              Component: Upload,
+              color: colors.white,
+              backgroundColor: colors.blue,
+              size: 20,
+              submit: true,
+            }}
+            formHandler={() => fileInputRef.current.click()}
+          />
         )}
         {downloadButton ? (
-          <a href={fileUrl} download={selectedFile.name}>
-            <IconButton size="small" style={{ backgroundColor: colors.blue }}>
-              <Download style={{ color: colors.white }} />
-            </IconButton>
+          /*HINT 4*/
+          <a href={fileUrl.file} download={selectedFile.fileName}>
+            <IconEndAdornmentComponent
+              icon={{
+                Component: Download,
+                color: colors.white,
+                backgroundColor: colors.blue,
+                size: 20,
+                submit: false,
+              }}
+            />
           </a>
         ) : null}
-      </InputContainer>
-      <TextComponent>{fileError}</TextComponent>
+      </Styles.InputContainer>
+      <TextComponent color="red">{fileUrl.fileError}</TextComponent>
       {uploadButton &&
-      selectedFile.type?.startsWith("image/") &&
+      FILE_TYPE_START_WITH &&
       selectedFile.size < MAX_FILE_SIZE ? (
-        <div style={{ width: "100%", height: "100%", backgroundColor: "red" }}>
-          <img
-            src={selectedFile.url}
-            alt=""
-            style={{ width: "250px", height: "auto" }}
-          />
-        </div>
+        <ImageLoader size={50}>
+          <img width="100%" src={selectedFile.url} alt="" />
+        </ImageLoader>
       ) : null}
-    </>
+    </div>
   );
 }
 
 export default InputFile;
+
+/*
+HINT 1 - props de input para serem recebiddas
+
+HINT 2 - useState (fileError) para definir o estado da mensagem de erro.
+
+HINT 3 - função que lida com os valores do input de arquivo e a mudança dos arquivos no inputFile.
+
+HINT 4 - botão para download do arquivo.
+*/

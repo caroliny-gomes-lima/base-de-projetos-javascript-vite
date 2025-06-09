@@ -1,0 +1,3 @@
+A pasta FormConfig possui arquivos que lidam com a gestão de valores de entrada de formulários, 
+incluindo validação, manipulação de estados e integração com um sistema de gerenciamento de formulários.
+Alé disso, a pasta também possui arquivos de cliclo de vida de componentes.
