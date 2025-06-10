@@ -17,6 +17,9 @@ import InputPassword from "./inputs/InputPassword";
 import InputSearch from "./inputs/InputSearch";
 import InputFile from "./inputs/InputFile";
 
+//Table
+import TableComponent from "./tables/TableComponent";
+
 //HOCs
 import TextGlobalLoader from "./others/TextLoader";
 import LoadContainer from "./others/ContainerLoader";
@@ -41,6 +44,9 @@ export {
   InputPassword,
   InputSearch,
   InputFile,
+
+  //Table
+  TableComponent,
 
   //HOCs
   TextGlobalLoader,
