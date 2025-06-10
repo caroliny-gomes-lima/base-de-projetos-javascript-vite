@@ -1,9 +1,13 @@
+/*Esse HOC funciona como um "contêiner" para o formulário, 
+Ele encapsula o formulário dentro de um form tag do HTML. 
+O formulario são os componentes filhos, no caso, os inputs*/
+
 //import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
-function WithFormHolder(WrappedComponent, formOptions = {}) {
+function WithFormHolder(WrappedComponent) {
   return function HOC({ onSubmit, ...props }) {
-    const methods = useForm(formOptions);
+    const methods = useForm();
     return (
       <FormProvider {...methods}>
         <form
