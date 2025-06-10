@@ -1,48 +1,46 @@
-import React from "react";
+//import React from "react";
 import Styles from "./styles/select.styles"; //INITIALIZAÇÃO do componente
-import { Checkbox, ListSubheader, MenuItem, Select } from "@mui/material";
+import { Checkbox, FormHelperText, ListSubheader } from "@mui/material";
 import { Controller, useFormContext } from "react-hook-form";
 import { Texts } from "../../config";
-//import { UseSelectOptionsValue } from "../FormConfig/useFormInput";
+import { useSelectValeuHandler } from "../FormConfig/FormInputHandlers";
+import { ErrorMessage } from "@hookform/error-message";
 
 function SelectComponent(props) {
-  // console.log("renderizou");
-  const { name, label = "", options, optionsGrouped, withTags } = props;
-  const { control } = useFormContext();
+  const {
+    name,
+    label = "",
+    options,
+    optionsGrouped,
+    withTags,
+    required,
+  } = props;
 
-  //console.log("onChange", allOptions);
-
-  //const [personName, setPersonName] = React.useState([]);
-
-  const handleChange = (itemValue, field) => {
-    const { value, onChange } = field;
-    const currentIndex = value?.indexOf(itemValue);
-    console.log("currentIndex", currentIndex);
-    console.log("value", value);
-
-    const newValue = [...(value || [])];
-    if (currentIndex === -1) {
-      newValue.push(itemValue);
-    } else {
-      newValue.splice(currentIndex, 1);
-    }
-    onChange(newValue);
-    //setPersonName(newValue);
-  };
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext();
+  const { handleChange, renderFieldLabel } = useSelectValeuHandler({
+    options,
+    optionsGrouped,
+    withTags,
+  });
 
   return (
     <>
       <Controller
         name={name}
-        rules={{ required: false }}
+        rules={{ required: required && Texts.ptBr.requiredField }}
         control={control}
-        defaultValue={""}
+        defaultValue={withTags ? [] : ""}
         disabled={false}
         render={({ field }) => (
           <>
             {label && (
               <Styles.ContainerLabel>
-                <Styles.Label>{label}</Styles.Label>
+                <Styles.Label $withError={errors[name]}>
+                  {label + (required ? "*" : "")}
+                </Styles.Label>
               </Styles.ContainerLabel>
             )}
             <Styles.StyledSelect
@@ -51,15 +49,9 @@ function SelectComponent(props) {
               value={field.value || (withTags ? [] : "")}
               onChange={(event) => field.onChange(event.target.value)}
               displayEmpty
+              onBlur={field.onBlur}
               inputProps={{ "aria-label": "Without label" }}
-              renderValue={(selected) =>
-                withTags && Array.isArray(selected) && selected.length > 0
-                  ? options
-                      .filter((opt) => selected.includes(opt.value))
-                      .map((opt) => opt.label)
-                      .join(", ")
-                  : options?.find((opt) => opt.value === selected)?.label
-              }
+              renderValue={(selected) => renderFieldLabel(selected)}
             >
               <Styles.StyledMenuItem value="">
                 Selecione uma opção
@@ -83,24 +75,22 @@ function SelectComponent(props) {
                   ])
                 : options?.map((item, index) =>
                     withTags ? (
-                      <>
-                        <Styles.StyledMenuItem key={index} value={item.value}>
-                          <Checkbox
-                            checked={field.value?.includes(item.value)}
-                            onChange={() => handleChange(item.value, field)}
-                            sx={{
-                              color: "black",
-                              "&.Mui-checked": {
-                                color: "#2986cc",
-                                ":hover": {
-                                  color: "white",
-                                },
+                      <Styles.StyledMenuItem key={index} value={item.value}>
+                        <Checkbox
+                          checked={field.value?.includes(item.value)}
+                          onChange={() => handleChange(item.value, field)}
+                          sx={{
+                            color: "black",
+                            "&.Mui-checked": {
+                              color: "#2986cc",
+                              ":hover": {
+                                color: "white",
                               },
-                            }}
-                          />
-                          {item.label}
-                        </Styles.StyledMenuItem>
-                      </>
+                            },
+                          }}
+                        />
+                        {item.label}
+                      </Styles.StyledMenuItem>
                     ) : (
                       <Styles.StyledMenuItem key={index} value={item.value}>
                         {item.label}
@@ -108,6 +98,13 @@ function SelectComponent(props) {
                     )
                   )}
             </Styles.StyledSelect>
+            <ErrorMessage
+              errors={errors}
+              name={name}
+              render={({ message }) => (
+                <FormHelperText error>{message}</FormHelperText>
+              )}
+            />
           </>
         )}
       />

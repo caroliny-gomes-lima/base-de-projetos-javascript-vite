@@ -14,14 +14,14 @@ import {
 function InputsRender({ loading }) {
   const texts = Texts["ptBr"].home;
 
-  const InputsNames = ["name", "number", "password"];
+  const InputsNames = ["name", "number", "password", "select"];
 
   const ageList = [
-    { value: 1, label: "Oliver Hansen" },
-    { value: 2, label: "Van Henry" },
-    { value: 3, label: "April Tucker" },
-    { value: 4, label: "Ralph Hubbard" },
-    { value: 5, label: "Omar Alexander" },
+    { value: "Oliver Hansen", label: "Oliver Hansen" },
+    { value: "Van Henry", label: "Van Henry" },
+    { value: "April Tucker", label: "April Tucker" },
+    { value: "Ralph Hubbard", label: "Ralph Hubbard" },
+    { value: "Omar Alexander", label: "Omar Alexander" },
   ];
 
   const ageTesteList = {
@@ -72,9 +72,22 @@ function InputsRender({ loading }) {
         </Grid>
 
         <Grid size={{ xs: 2, sm: 4, md: 4, lg: 4 }}>
+          <InputPassword />
+        </Grid>
+
+        <Grid size={{ xs: 2, sm: 4, md: 4, lg: 4 }}>
           <SelectComponent
-            name="selectOne"
+            name="select"
             label="Seleção"
+            options={ageList}
+            required
+          />
+        </Grid>
+
+        <Grid size={{ xs: 2, sm: 4, md: 4, lg: 4 }}>
+          <SelectComponent
+            name="selectWithChec"
+            label="Seleção com checkbox"
             withTags
             options={ageList}
           />
@@ -87,11 +100,6 @@ function InputsRender({ loading }) {
             optionsGrouped={optionsGrouped}
           />
         </Grid>
-
-        <Grid size={{ xs: 2, sm: 4, md: 4, lg: 4 }}>
-          <InputPassword />
-        </Grid>
-
         <Grid size={{ xs: 2, sm: 4, md: 4, lg: 4 }}>
           <InputFile label="Enviar arquivo" uploadButton />
         </Grid>
@@ -114,7 +122,7 @@ function InputsRender({ loading }) {
   );
 }
 //HINT 1
-const InputsTypes = WithFormHolder(InputsRender, { mode: "onBlur" });
+const InputsTypes = WithFormHolder(InputsRender);
 
 export default InputsTypes;
 
