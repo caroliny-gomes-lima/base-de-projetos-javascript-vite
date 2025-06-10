@@ -3,7 +3,7 @@ import Styles from "./styles/input.styles"; //INITIALIZAÇÃO
 import { FormHelperText } from "@mui/material";
 import { Controller, useFormContext } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
-import { useInputValue } from "../FormConfig/useFormInput";
+import { useValueHandler } from "../FormConfig/FormInputHandlers";
 import IconEndAdornmentComponent from "./inputComponents/IconEnd.adornment";
 import { Texts } from "../../config";
 
@@ -33,7 +33,7 @@ const InputComponent = forwardRef((prop, ref) => {
   const conditionFieldValue = disabledUntil ? watch(disabledUntil) : true;
   const isDisabled = disabledUntil ? !conditionFieldValue : false;
 
-  const { defaultValue: inputDefaultValue } = useInputValue(
+  const { defaultValue: inputDefaultValue } = useValueHandler(
     watchAllFields,
     defaultValue
   );
@@ -71,6 +71,7 @@ const InputComponent = forwardRef((prop, ref) => {
               inputRef={ref || null}
               type={type}
               value={field.value !== undefined ? field.value : ""}
+              onBlur={field.onBlur}
               onChange={field.onChange}
               placeholder={placeholder}
               endAdornment={

@@ -7,7 +7,7 @@ import { Download, Upload } from "@mui/icons-material";
 import TextComponent from "../others/TextComponent";
 import LoadContainer from "../others/ContainerLoader";
 import IconEndAdornmentComponent from "./inputComponents/IconEnd.adornment";
-import { useFileValue } from "../FormConfig/useFormInput";
+import { useFileHandler } from "../FormConfig/FormInputHandlers";
 
 //HOC -> Higher Order Component
 const ImageLoader = LoadContainer(Styles.ImageBox);
@@ -35,7 +35,7 @@ function InputFile(props) {
 
   //--------------------ATUALIZAÇÃO E DESMONTAGEM----------------
   //HINT 3
-  const { handleFileChange } = useFileValue({
+  const { handleFileChange } = useFileHandler({
     fileUrl,
     setFileUrl,
     texts,
