@@ -48,13 +48,14 @@ const ContainerLabel = styled.div(() => {
   };
 });
 
-const Label = styled.label(({ theme }) => {
-  const { spacing } = theme;
+const Label = styled.label(({ theme, $withError }) => {
+  const { spacing, palette: colors } = theme;
   return {
     ...FontFamily.bold12,
     padding: 0,
     marginTop: spacing(1),
     marginBottom: spacing(1),
+    color: $withError ? colors.error.main : colors.primary.contrastText,
     transition: ".2s",
   };
 });
