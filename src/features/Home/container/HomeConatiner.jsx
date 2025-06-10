@@ -2,7 +2,11 @@ import React from "react";
 import Styles from "../styles/HomeContainer.styles";
 import { Fonts } from "../../../config";
 import InputsTypes from "../components/InputsType.components";
-import { TextComponent, TextGlobalLoader } from "../../../components";
+import {
+  TextComponent,
+  TextGlobalLoader,
+  TableComponent,
+} from "../../../components";
 
 const Text = TextGlobalLoader(TextComponent);
 
@@ -26,19 +30,27 @@ function HomeConatiner() {
   };
 
   return (
-    <Styles.Container>
-      <Text
-        fontFamily={Fonts.bold}
-        fontSize={20}
-        loading={false}
-        loadingSizes={["200px", "30px"]}
-      >
-        Componentes Inputs
-      </Text>
-      <Styles.content>
-        <InputsTypes onSubmit={(data) => Submit(data)} loading={loading} />
-      </Styles.content>
-    </Styles.Container>
+    <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+      <Styles.Container>
+        <Text
+          fontFamily={Fonts.bold}
+          fontSize={20}
+          loading={false}
+          loadingSizes={["200px", "30px"]}
+        >
+          Componentes Inputs
+        </Text>
+        <Styles.content>
+          <InputsTypes onSubmit={(data) => Submit(data)} loading={loading} />
+        </Styles.content>
+      </Styles.Container>
+
+      <Styles.Container>
+        <Styles.content>
+          <TableComponent />
+        </Styles.content>
+      </Styles.Container>
+    </div>
   );
 }
 
